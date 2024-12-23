@@ -4,7 +4,8 @@
         "build": "turbo build",
         "dev": "turbo dev",
         "lint": "turbo lint",
-        "format": "prettier --write \"**/*.{ts,tsx,md}\""
+        "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+        "publish": "turbo run build lint test && changeset version && changeset publish"
     },
     "devDependencies": {
         "prettier": "^3.2.5",
@@ -17,5 +18,8 @@
     "packageManager": "npm@10.8.2",
     "workspaces": [
         "packages/*"
-    ]
+    ],
+    "dependencies": {
+        "@changesets/cli": "^2.27.11"
+    }
 }
