@@ -11,7 +11,8 @@
             ],
             "outputs": [
                 "dist/**"
-            ]
+            ],
+            "outputLogs": "none"
         },
         "check-types": {
             "dependsOn": [

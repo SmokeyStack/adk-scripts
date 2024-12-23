@@ -45,7 +45,7 @@ export default class PlayerHelper {
         inventory.setItem(player.selectedSlotIndex, item);
     }
 
-    static getItemFromEquippableSlot(
+    static getItemFromEquippable(
         player: Player,
         slot: EquipmentSlot
     ): ItemStack {
