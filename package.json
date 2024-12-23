@@ -1,0 +1,16 @@
+{
+    "name": "adk-scripts",
+    "version": "1.0.0",
+    "main": "index.js",
+    "scripts": {
+        "dev-server": "npm run compile --workspace=packages/server",
+        "build-server": "npm run compile --workspace=packages/server"
+    },
+    "workspaces": [
+        "packages/server"
+    ],
+    "keywords": [],
+    "author": "SmokeyStack",
+    "license": "GPL-3.0-only",
+    "description": ""
+}

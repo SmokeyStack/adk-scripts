@@ -1,0 +1,28 @@
+{
+    "compileOnSave": false,
+    "compilerOptions": {
+        "allowUnreachableCode": true,
+        "allowUnusedLabels": true,
+        "baseUrl": "./scripts",
+        "declaration": true,
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "forceConsistentCasingInFileNames": true,
+        "listFiles": false,
+        "module": "ES2020",
+        "moduleResolution": "Node",
+        "noEmitHelpers": true,
+        "noImplicitAny": false,
+        "noImplicitReturns": false,
+        "noImplicitUseStrict": false,
+        "noLib": false,
+        "outDir": "dist",
+        "pretty": true,
+        "skipLibCheck": true,
+        "sourceMap": false,
+        "strict": false,
+        "target": "ES2022"
+    },
+    "exclude": ["lib", "dist", "node_modules"],
+    "include": ["src"]
+}

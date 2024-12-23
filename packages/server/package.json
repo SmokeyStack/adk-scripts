@@ -1,0 +1,16 @@
+{
+    "author": "",
+    "dependencies": {
+        "@minecraft/server": "^1.16.0"
+    },
+    "description": "",
+    "keywords": [],
+    "license": "GPL-3.0-only",
+    "main": "dist/index.js",
+    "name": "adk-scripts-server",
+    "scripts": {
+        "compile": "tsc"
+    },
+    "types": "dist/index.d.ts",
+    "version": "1.0.0"
+}
