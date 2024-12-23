@@ -1,15 +1,19 @@
 {
-    "author": "",
+    "author": "SmokeyStack",
     "dependencies": {
         "@minecraft/server": "^1.16.0"
     },
     "description": "",
+    "devDependencies": {
+        "tsup": "^8.3.5"
+    },
     "keywords": [],
     "license": "GPL-3.0-only",
     "main": "dist/index.js",
     "name": "adk-scripts-server",
     "scripts": {
-        "compile": "tsc"
+        "build": "tsup src/index.ts --format cjs,esm --dts",
+        "dev": "tsup src/index.ts --format cjs,esm --dts --watch"
     },
     "types": "dist/index.d.ts",
     "version": "1.0.0"
