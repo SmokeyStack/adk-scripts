@@ -32,32 +32,75 @@ export class Vector3Builder implements Vector3 {
         return Vector3Helper.equals(this, vector);
     }
 
-    add(vector: Vector3): this {
-        return this.assign(Vector3Helper.add(this, vector));
+    add(first: number | Vector3, second?: number, third?: number): this {
+        if (typeof first == 'object') {
+            return this.assign(Vector3Helper.add(this, first));
+        } else {
+            return this.assign(
+                Vector3Helper.add(
+                    this,
+                    new Vector3Builder(first, second, third)
+                )
+            );
+        }
     }
 
-    subtract(vector: Vector3): this {
-        return this.assign(Vector3Helper.subtract(this, vector));
+    subtract(first: number | Vector3, second?: number, third?: number): this {
+        if (typeof first == 'object') {
+            return this.assign(Vector3Helper.subtract(this, first));
+        } else {
+            return this.assign(
+                Vector3Helper.subtract(
+                    this,
+                    new Vector3Builder(first, second, third)
+                )
+            );
+        }
     }
 
     scale(scalar: number): this {
         return this.assign(Vector3Helper.scale(this, scalar));
     }
 
-    dot(vector: Vector3): number {
-        return Vector3Helper.dot(this, vector);
+    dot(first: number | Vector3, second?: number, third?: number): number {
+        if (typeof first == 'object') {
+            return Vector3Helper.dot(this, first);
+        } else {
+            return Vector3Helper.dot(
+                this,
+                new Vector3Builder(first, second, third)
+            );
+        }
     }
 
-    cross(vector: Vector3): this {
-        return this.assign(Vector3Helper.cross(this, vector));
+    cross(first: number | Vector3, second?: number, third?: number): this {
+        if (typeof first == 'object') {
+            return this.assign(Vector3Helper.cross(this, first));
+        } else {
+            return this.assign(
+                Vector3Helper.cross(
+                    this,
+                    new Vector3Builder(first, second, third)
+                )
+            );
+        }
     }
 
     magnitude(): number {
         return Vector3Helper.magnitude(this);
     }
 
-    distance(vector: Vector3): number {
-        return Vector3Helper.magnitude(Vector3Helper.subtract(this, vector));
+    distance(first: number | Vector3, second?: number, third?: number): number {
+        if (typeof first == 'object') {
+            return Vector3Helper.magnitude(Vector3Helper.subtract(this, first));
+        } else {
+            return Vector3Helper.magnitude(
+                Vector3Helper.subtract(
+                    this,
+                    new Vector3Builder(first, second, third)
+                )
+            );
+        }
     }
 
     normalize(): this {
@@ -72,8 +115,17 @@ export class Vector3Builder implements Vector3 {
         return Vector3Helper.toString(this, options);
     }
 
-    multiply(vector: Vector3): this {
-        return this.assign(Vector3Helper.multiply(this, vector));
+    multiply(first: number | Vector3, second?: number, third?: number): this {
+        if (typeof first == 'object') {
+            return this.assign(Vector3Helper.multiply(this, first));
+        } else {
+            return this.assign(
+                Vector3Helper.multiply(
+                    this,
+                    new Vector3Builder(first, second, third)
+                )
+            );
+        }
     }
 
     rotateX(angle: number): this {
