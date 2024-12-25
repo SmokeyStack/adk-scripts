@@ -1,4 +1,5 @@
-import { Block } from '@minecraft/server';
+import { Block, Dimension } from '@minecraft/server';
+import Vector3Builder from './vector';
 
 export default class BlockHelper {
     static blocksMovement(block: Block): boolean {
@@ -7,6 +8,15 @@ export default class BlockHelper {
             block.typeId != 'minecraft:bamboo_sapling' &&
             !block.isLiquid &&
             !block.isAir
+        );
+    }
+
+    static destroyBlockAndSpawnLoot(
+        dimension: Dimension,
+        location: Vector3Builder
+    ): void {
+        dimension.runCommand(
+            `setblock ${location.x} ${location.y} ${location.z} air`
         );
     }
 }

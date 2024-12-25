@@ -5,5 +5,6 @@ export * as direction from './direction';
 export * as item_component from './item_component';
 export * as player from './player';
 export * as system from './system';
+export * as timer from './timer';
 export * as vector_helper from './vector_helper';
 export * as vector from './vector';
