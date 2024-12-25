@@ -12,7 +12,8 @@
             "outputs": [
                 "dist/**"
             ],
-            "outputLogs": "none"
+            "outputLogs": "none",
+            "cache": false
         },
         "check-types": {
             "dependsOn": [
@@ -21,7 +22,8 @@
         },
         "dev": {
             "cache": false,
-            "persistent": true
+            "persistent": true,
+            "outputLogs": "none"
         },
         "lint": {
             "dependsOn": [

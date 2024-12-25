@@ -1,9 +1,9 @@
-export * from './block';
-export * from './cache';
-export * from './debug';
-export * from './direction';
-export * from './item_component';
-export * from './player';
-export * from './system';
-export * from './vector_helper';
-export * from './vector';
+export * as block from './block';
+export * as cache from './cache';
+export * as debug from './debug';
+export * as direction from './direction';
+export * as item_component from './item_component';
+export * as player from './player';
+export * as system from './system';
+export * as vector_helper from './vector_helper';
+export * as vector from './vector';

@@ -11,10 +11,14 @@
     "license": "GPL-3.0-only",
     "main": "dist/index.js",
     "name": "adk-scripts-server",
+    "repository": {
+        "directory": "https://github.com/SmokeyStack/adk-scripts",
+        "type": "git"
+    },
     "scripts": {
         "build": "tsup src/index.ts --format cjs,esm --dts",
         "dev": "tsup src/index.ts --format cjs,esm --dts --watch"
     },
     "types": "dist/index.d.ts",
-    "version": "1.0.0"
+    "version": "1.0.1"
 }
