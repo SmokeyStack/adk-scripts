@@ -1,7 +1,7 @@
 import { Block, Dimension } from '@minecraft/server';
-import Vector3Builder from './vector';
+import { Vector3Builder } from './vector';
 
-export default class BlockHelper {
+export class BlockHelper {
     static blocksMovement(block: Block): boolean {
         return (
             block.typeId != 'minecraft:cobweb' &&

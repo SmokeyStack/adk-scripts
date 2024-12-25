@@ -9,7 +9,7 @@ import {
     EntityEquippableComponent
 } from '@minecraft/server';
 
-export default class PlayerHelper {
+export class PlayerHelper {
     static decrementStack(player: Player, amount: number = 1): void {
         if (player.getGameMode() == GameMode.creative) return;
 

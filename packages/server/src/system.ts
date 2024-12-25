@@ -4,7 +4,7 @@ import {
     world
 } from '@minecraft/server';
 
-export default class SystemHelper {
+export class SystemHelper {
     static registerCustomComponentBlock(
         id: string,
         component: BlockCustomComponent

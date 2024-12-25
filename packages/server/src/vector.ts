@@ -1,7 +1,7 @@
 import { Vector3 } from '@minecraft/server';
 import { Vector3Helper } from './vector_helper';
 
-export default class Vector3Builder implements Vector3 {
+export class Vector3Builder implements Vector3 {
     x: number;
     y: number;
     z: number;

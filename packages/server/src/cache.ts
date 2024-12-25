@@ -3,7 +3,7 @@ import { BlockPermutation, Dimension, world } from '@minecraft/server';
 const dimensions: { [key: string]: Dimension } = {};
 const permutations: { [key: string]: BlockPermutation } = {};
 
-export default class Cache {
+export class Cache {
     static getDimension(name: string): Dimension {
         if (dimensions[name]) return dimensions[name];
         return (dimensions[name] = world.getDimension(name));

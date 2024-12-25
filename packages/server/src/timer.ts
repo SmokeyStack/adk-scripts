@@ -1,4 +1,4 @@
-export default class Timer {
+export class Timer {
     static lastTime: number = -1;
     static lastOperation: string = '';
 

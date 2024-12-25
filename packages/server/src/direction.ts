@@ -1,5 +1,5 @@
 import { Direction } from '@minecraft/server';
-import Vector3Builder from './vector';
+import { Vector3Builder } from './vector';
 
 export const DirectionType = {
     Horizontal: [
