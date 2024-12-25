@@ -7,6 +7,9 @@
     "devDependencies": {
         "tsup": "^8.3.5"
     },
+    "files": [
+        "dist"
+    ],
     "keywords": [],
     "license": "GPL-3.0-only",
     "main": "dist/index.js",
@@ -16,9 +19,9 @@
         "type": "git"
     },
     "scripts": {
-        "build": "tsup src/index.ts --format esm --dts",
-        "dev": "tsup src/index.ts --format esm --dts --watch"
+        "build": "tsup src/index.ts",
+        "dev": "tsup src/index.ts --watch"
     },
-    "types": "dist/index.d.ts",
-    "version": "1.0.4"
+    "types": "dist/index.d.mts",
+    "version": "1.0.5"
 }

@@ -2,14 +2,15 @@ import { defineConfig } from 'tsup';
 
 export default defineConfig({
     entry: ['src/index.ts'],
-    format: ['esm'],
+    format: 'esm',
     minify: false,
     sourcemap: false,
-    dts: false,
+    dts: true,
     outDir: 'dist',
     outExtension({}) {
         return {
             js: `.js`
         };
-    }
+    },
+    clean: true
 });
