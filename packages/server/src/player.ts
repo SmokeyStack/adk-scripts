@@ -54,9 +54,29 @@ export class PlayerHelper {
         ).getEquipment(slot);
     }
 
+    static setItemToEquippable(
+        player: Player,
+        slot: EquipmentSlot,
+        item: ItemStack
+    ): void {
+        (
+            player.getComponent('equippable') as EntityEquippableComponent
+        ).setEquipment(slot, item);
+    }
+
     static getItemFromInventory(player: Player, slot: number): ItemStack {
         return (
             player.getComponent('inventory') as EntityInventoryComponent
         ).container.getItem(slot);
+    }
+
+    static setItemToInventory(
+        player: Player,
+        slot: number,
+        item: ItemStack
+    ): void {
+        (
+            player.getComponent('inventory') as EntityInventoryComponent
+        ).container.setItem(slot, item);
     }
 }

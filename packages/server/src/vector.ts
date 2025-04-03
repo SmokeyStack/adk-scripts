@@ -143,4 +143,8 @@ export class Vector3Builder implements Vector3 {
     clone(): Vector3 {
         return new Vector3Builder(this);
     }
+
+    center(): this {
+        return this.assign(Vector3Helper.center(this));
+    }
 }

@@ -4,7 +4,7 @@ import { Vector3Builder } from './vector';
 export class BlockHelper {
     static blocksMovement(block: Block): boolean {
         return (
-            block.typeId != 'minecraft:cobweb' &&
+            block.typeId != 'minecraft:web' &&
             block.typeId != 'minecraft:bamboo_sapling' &&
             !block.isLiquid &&
             !block.isAir
@@ -16,7 +16,7 @@ export class BlockHelper {
         location: Vector3Builder
     ): void {
         dimension.runCommand(
-            `setblock ${location.x} ${location.y} ${location.z} air`
+            `setblock ${location.x} ${location.y} ${location.z} air destroy`
         );
     }
 }

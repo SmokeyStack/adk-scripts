@@ -12,7 +12,10 @@ export class Cache {
 
     static getDimensionHeightRange(name: string): [number, number] {
         const dimension = Cache.getDimension(name);
-        return [dimension.heightRange.min, dimension.heightRange.max];
+        return (dimensionsHeightRange[name] = [
+            dimension.heightRange.min,
+            dimension.heightRange.max
+        ]);
     }
 
     static getBlockPermutation(
