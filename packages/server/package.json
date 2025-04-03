@@ -23,5 +23,5 @@
         "dev": "tsup src/index.ts --watch"
     },
     "types": "dist/index.d.mts",
-    "version": "2.0.0-beta.1"
+    "version": "2.0.0-beta.2"
 }
