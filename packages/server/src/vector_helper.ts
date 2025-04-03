@@ -1,4 +1,6 @@
-import { Vector3 } from '@minecraft/server';
+import { Vector2, Vector3 } from '@minecraft/server';
+import { Vector3Builder } from './vector';
+import { MathHelper } from './math';
 
 export class Vector3Helper {
     static equals(vector1: Vector3, vector2: Vector3): boolean {
@@ -126,5 +128,9 @@ export class Vector3Helper {
             y: vector.x * sin + vector.y * cos,
             z: vector.z
         };
+    }
+
+    static center(vector: Vector3): Vector3 {
+        return Vector3Helper.add(vector, { x: 0.5, y: 0.5, z: 0.5 });
     }
 }
