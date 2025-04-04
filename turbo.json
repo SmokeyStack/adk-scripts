@@ -23,7 +23,7 @@
         "dev": {
             "cache": false,
             "persistent": true,
-            "outputLogs": "none"
+            "outputLogs": "full"
         },
         "lint": {
             "dependsOn": [

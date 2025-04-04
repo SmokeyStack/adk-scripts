@@ -1,7 +1,8 @@
 {
     "author": "SmokeyStack",
     "dependencies": {
-        "@minecraft/server": "^1.16.0"
+        "@minecraft/common": "1.2.0",
+        "@minecraft/server": "2.0.0-beta.1.21.80-preview.26"
     },
     "description": "",
     "devDependencies": {
@@ -23,5 +24,5 @@
         "dev": "tsup src/index.ts --watch"
     },
     "types": "dist/index.d.mts",
-    "version": "2.0.0-beta.2"
+    "version": "2.0.0-beta.3"
 }

@@ -1,9 +1,12 @@
 import {
     Block,
     BlockComponentTypes,
+    BlockDestructionParticlesComponent,
+    BlockFluidContainerComponent,
     BlockInventoryComponent,
     BlockPermutation,
     BlockPistonComponent,
+    BlockRecordPlayerComponent,
     BlockSignComponent,
     Container,
     Dimension,
@@ -19,179 +22,119 @@ import {
 
 export class Debug {
     static logEventData(
-        data: Object,
+        data: Record<string, any>,
         prefix = '',
         skip: string[] = []
-    ): Object {
-        return Debug.logEventData(data, prefix, skip);
-    }
-
-    private logEventData(
-        data: Object,
-        prefix = '',
-        skip: string[] = []
-    ): Object {
-        const prototype: Object = Object.getPrototypeOf(data);
-        let result: Object = {};
-        let parentName: string = '';
+    ): Record<string, any> {
+        const result: Record<string, any> = {};
+        const prototype = Object.getPrototypeOf(data);
+        let parent_name: string = '';
 
         for (const key in data) {
             if (skip.includes(key)) continue;
-            const value: any = data[key];
-            parentName = this.getParentPrototypeName(data, key);
-            let fullKey: string = prefix ? `${prefix}.${key}` : key;
 
-            if (typeof data[key] === 'object' && value !== null) {
+            const value = data[key];
+            parent_name = Debug.getParentPrototypeName(data, key);
+            let full_key = prefix ? `${prefix}.${key}` : key;
+
+            if (typeof value === 'object' && value !== null) {
                 if (!prototype.hasOwnProperty(key))
-                    fullKey = parentName ? `${parentName}.${key}` : key;
+                    full_key = parent_name ? `${parent_name}.${key}` : key;
 
-                result[fullKey] = this.logEventData(
+                result[full_key] = Debug.logEventData(
                     value,
                     value.constructor.name,
                     skip
                 );
-            } else if (typeof data[key] === 'function') {
-                // console.warn('private: ' + fullKey);
-                switch (data.constructor) {
-                    case Dimension:
-                        result[fullKey] = this.logDimensionprivates(data, key);
-                        break;
-                    case Entity:
-                        result[fullKey] = this.logEntityprivates(
-                            data,
-                            key,
-                            skip
-                        );
-                        break;
-                    case Player:
-                        result[fullKey] = this.logPlayerprivates(
-                            data,
-                            key,
-                            skip
-                        );
-                        break;
-                    case Block:
-                        result[fullKey] = this.logBlockprivates(
-                            data,
-                            key,
-                            skip
-                        );
-                        break;
-                    case BlockPermutation:
-                        result[fullKey] = this.logBlockPermutationprivates(
-                            data,
-                            key
-                        );
-                        break;
-                    case ItemStack:
-                        result[fullKey] = this.logItemStackprivates(
-                            data,
-                            key,
-                            skip
-                        );
-                        break;
-                    case Container:
-                        result[fullKey] = this.logContainerprivates(
-                            data,
-                            key,
-                            skip
-                        );
-                        break;
-                    case EntityTypeFamilyComponent:
-                        result[fullKey] =
-                            this.logEntityTypeFamilyComponentprivates(
-                                data,
-                                key
-                            );
-                        break;
-                    case EntityRideableComponent:
-                        result[fullKey] =
-                            this.logEntityRideableComponentprivates(data, key);
-                        break;
-                    case BlockSignComponent:
-                        result[fullKey] = this.logBlockSignComponentprivates(
-                            data,
-                            key
-                        );
-                        break;
-                    case BlockInventoryComponent:
-                        result[fullKey] =
-                            this.logBlockInventoryComponentprivates(data, key);
-                        break;
-                    case BlockPistonComponent:
-                        result[fullKey] = this.logBlockPistonComponentprivates(
-                            data,
-                            key
-                        );
-                        break;
-                    case ItemDurabilityComponent:
-                        result[fullKey] =
-                            this.logItemDurabilityComponentprivates(data, key);
-                        break;
-                    case ItemEnchantableComponent:
-                        result[fullKey] =
-                            this.logItemEnchantableComponentprivates(data, key);
-                        break;
-                    default:
-                        break;
-                }
-            } else {
-                if (prototype.hasOwnProperty(key)) {
-                    result[fullKey] = value;
-                } else {
-                    fullKey = parentName ? `${parentName}.${key}` : key;
-                    result[fullKey] = value;
-                }
-            }
+            } else if (typeof value === 'function')
+                result[full_key] = Debug.handleFunctionLogging(data, key, skip);
+            else result[full_key] = value;
         }
 
-        result = Object.keys(result)
-            .sort()
-            .reduce((object, key) => {
-                object[key] = result[key];
-                return object;
-            }, {});
-
-        return result;
+        return Debug.sortObjectKeys(result);
     }
 
-    private logDimensionprivates(data: any, key: string): any {
+    private static handleFunctionLogging(
+        data: Record<string, any>,
+        key: string,
+        skip: string[]
+    ): any {
+        switch (data.constructor) {
+            case Dimension:
+                return Debug.logDimensionData(data, key);
+            case Entity:
+                return Debug.logEntityData(data, key, skip);
+            case Player:
+                return Debug.logPlayerData(data, key, skip);
+            case Block:
+                return Debug.logBlockKey(data, key, skip);
+            case BlockPermutation:
+                return Debug.logBlockPermutationKey(data, key);
+            case ItemStack:
+                return Debug.logItemStackKey(data, key, skip);
+            case Container:
+                return Debug.logContainerKey(data, key, skip);
+            case EntityTypeFamilyComponent:
+                return Debug.logEntityTypeFamilyComponentKey(data, key);
+            case EntityRideableComponent:
+                return Debug.logEntityRideableComponentKey(data, key);
+            case BlockFluidContainerComponent:
+                return Debug.logBlockFluidContainerComponent(data, key);
+            case BlockSignComponent:
+                return Debug.logBlockSignComponentKey(data, key);
+            case BlockPistonComponent:
+                return Debug.logBlockPistonComponentKey(data, key);
+            case BlockRecordPlayerComponent:
+                return Debug.logBlockRecordPlayerComponentKey(data, key);
+            case ItemDurabilityComponent:
+                return Debug.logItemDurabilityComponentKey(data, key);
+            case ItemEnchantableComponent:
+                return Debug.logItemEnchantableComponentKey(data, key);
+            default:
+                return undefined;
+        }
+    }
+
+    private static sortObjectKeys(
+        result: Record<string, any>
+    ): Record<string, any> {
+        return Object.keys(result)
+            .sort()
+            .reduce(
+                (sorted, key) => {
+                    sorted[key] = result[key];
+                    return sorted;
+                },
+                {} as Record<string, any>
+            );
+    }
+
+    private static logDimensionData(data: any, key: string): any {
         switch (key) {
             case 'getPlayers':
-                return this.logEventData(data[key](), '', ['dimension']);
+                return Debug.logEventData(data[key](), '', ['dimension']);
+            case 'getEntities':
+                return Debug.logEventData(data[key](), '', ['dimension']);
             case 'getWeather':
                 return data[key]();
             default:
-                break;
+                return undefined;
         }
     }
 
-    private logEntityprivates(
+    private static logEntityData(
         data: any,
         key: string,
         skip: string[] = []
     ): any {
         switch (key) {
             case 'getBlockFromViewDirection':
-                if (
-                    data[key]({
-                        includeLiquidBlocks: true,
-                        includePassableBlocks: true
-                    }) === undefined
-                )
-                    return;
-                return this.logEventData(
-                    data[key]({
-                        includeLiquidBlocks: true,
-                        includePassableBlocks: true
-                    }),
-                    '',
-                    ['dimension']
-                );
+                if (data[key]() === undefined) return;
+                return Debug.logEventData(data[key](), '', ['dimension']);
             case 'getComponents':
                 skip.push('entity');
                 return data[key]().map((component: any) =>
-                    this.logEventData(
+                    Debug.logEventData(
                         component,
                         component.constructor.name,
                         skip
@@ -206,18 +149,10 @@ export class Debug {
                 return data[key]();
             case 'getEffects':
                 return data[key]().map((effect: any) =>
-                    this.logEventData(effect, effect.constructor.name)
+                    Debug.logEventData(effect, effect.constructor.name)
                 );
             case 'getEntitiesFromViewDirection':
-                return this.logEventData(
-                    data[key]({
-                        ignoreBlockCollision: false,
-                        includeLiquidBlocks: false,
-                        includePassableBlocks: false
-                    }),
-                    '',
-                    ['dimension']
-                );
+                return Debug.logEventData(data[key](), '', ['dimension']);
             case 'getHeadLocation':
                 return data[key]();
             case 'getRotation':
@@ -229,11 +164,11 @@ export class Debug {
             case 'getViewDirection':
                 return data[key]();
             default:
-                break;
+                return undefined;
         }
     }
 
-    private logPlayerprivates(
+    private static logPlayerData(
         data: any,
         key: string,
         skip: string[] = []
@@ -243,17 +178,29 @@ export class Debug {
                 return data[key]();
             case 'getSpawnPoint':
                 if (data[key]() === undefined) return;
-                return this.logEventData(data[key](), '', skip);
+                return Debug.logEventData(data[key](), '', skip);
             case 'getTotalXp':
                 return data[key]();
             case 'isOp':
                 return data[key]();
             default:
-                return this.logEntityprivates(data, key, skip);
+                return this.logEntityData(data, key, skip);
         }
     }
 
-    private logBlockprivates(data: any, key: string, skip: string[]): any {
+    private static logBlockFluidContainerComponent(
+        data: any,
+        key: string
+    ): any {
+        switch (key) {
+            case 'getFluidType':
+                return Debug.logEventData(data[key](), '');
+            default:
+                return undefined;
+        }
+    }
+
+    private static logBlockKey(data: any, key: string, skip: string[]): any {
         switch (key) {
             case 'getComponent': {
                 skip.push('block');
@@ -262,7 +209,7 @@ export class Debug {
                     if (data[key](BlockComponentTypes[component]) === undefined)
                         continue;
                     result.push(
-                        this.logEventData(
+                        Debug.logEventData(
                             data[key](BlockComponentTypes[component]),
                             component,
                             skip
@@ -273,31 +220,35 @@ export class Debug {
             }
             case 'getItemStack':
                 if (data[key]() === undefined) return;
-                return this.logEventData(data[key]());
+                return Debug.logEventData(data[key]());
             case 'getRedstonePower':
                 return data[key]();
             case 'getTags':
                 return data[key]();
             default:
-                break;
+                return undefined;
         }
     }
 
-    private logBlockPermutationprivates(data: any, key: string): any {
+    private static logBlockPermutationKey(data: any, key: string): any {
         switch (key) {
             case 'getAllStates':
                 return data[key]();
             case 'getItemStack':
                 if (data[key]() === undefined) return;
-                return this.logEventData(data[key]());
+                return Debug.logEventData(data[key]());
             case 'getTags':
                 return data[key]();
             default:
-                break;
+                return undefined;
         }
     }
 
-    private logItemStackprivates(data: any, key: string, skip: string[]): any {
+    private static logItemStackKey(
+        data: any,
+        key: string,
+        skip: string[]
+    ): any {
         switch (key) {
             case 'getCanDestroy':
                 return data[key]();
@@ -305,7 +256,7 @@ export class Debug {
                 return data[key]();
             case 'getComponents':
                 return data[key]().map((component: any) =>
-                    this.logEventData(component, component.constructor.name)
+                    Debug.logEventData(component, component.constructor.name)
                 );
             case 'getDynamicPropertyIds':
                 return data[key]().map((id: string) => ({
@@ -319,11 +270,15 @@ export class Debug {
             case 'getTags':
                 return data[key]();
             default:
-                break;
+                return undefined;
         }
     }
 
-    private logContainerprivates(data: any, key: string, skip: string[]): any {
+    private static logContainerKey(
+        data: any,
+        key: string,
+        skip: string[]
+    ): any {
         switch (key) {
             case 'getItem': {
                 let size: number = data['size'];
@@ -332,57 +287,63 @@ export class Debug {
                     if (data[key](index) === undefined) continue;
                     result.push({
                         slot: index,
-                        content: this.logEventData(data[key](index))
+                        content: Debug.logEventData(data[key](index))
                     });
                 }
                 return result;
             }
             default:
-                break;
+                return undefined;
         }
     }
 
-    private logEntityBreathableComponentprivates(data: any, key: string): any {
+    private static logEntityBreathableComponentKey(
+        data: any,
+        key: string
+    ): any {
         switch (key) {
             case 'getBreatheBlocks':
-                return this.logEventData(data[key]());
+                return Debug.logEventData(data[key]());
             case 'getNonBreatheBlocks':
-                return this.logEventData(data[key]());
+                return Debug.logEventData(data[key]());
             default:
-                break;
+                return undefined;
         }
     }
 
-    private logEntityTypeFamilyComponentprivates(data: any, key: string): any {
+    private static logEntityTypeFamilyComponentKey(
+        data: any,
+        key: string
+    ): any {
         switch (key) {
             case 'getTypeFamilies':
-                return this.logEventData(data[key]());
+                return Debug.logEventData(data[key]());
             default:
-                break;
+                return undefined;
         }
     }
 
-    private logEntityRideableComponentprivates(data: any, key: string): any {
+    private static logEntityRideableComponentKey(data: any, key: string): any {
         switch (key) {
             case 'getFamilyTypes':
-                return this.logEventData(data[key]());
+                return Debug.logEventData(data[key]());
             case 'getRiders':
-                return this.logEventData(data[key](), '', [
+                return Debug.logEventData(data[key](), '', [
                     'entityRidingOn',
                     'dimension'
                 ]);
             default:
-                break;
+                return undefined;
         }
     }
 
-    private logBlockSignComponentprivates(data: any, key: string): any {
+    private static logBlockSignComponentKey(data: any, key: string): any {
         switch (key) {
             case 'getRawText': {
                 let result: any[] = [];
                 for (const side in SignSide) {
                     if (data[key](side) === undefined) continue;
-                    result.push(this.logEventData(data[key](side)));
+                    result.push(Debug.logEventData(data[key](side)));
                 }
                 return result;
             }
@@ -409,71 +370,37 @@ export class Debug {
                 return result;
             }
             default:
-                break;
+                return undefined;
         }
     }
 
-    private logBlockInventoryComponentprivates(data: any, key: string): any {
-        switch (key) {
-            case 'getRawText': {
-                let result: any[] = [];
-                for (const side in SignSide) {
-                    if (data[key](side) === undefined) continue;
-                    result.push(this.logEventData(data[key](side)));
-                }
-                return result;
-            }
-            case 'getText': {
-                let result: any[] = [];
-                for (const side in SignSide) {
-                    if (data[key](side) === undefined) continue;
-                    result.push({
-                        side: side,
-                        content: data[key](side)
-                    });
-                }
-                return result;
-            }
-            case 'getTextDyeColor': {
-                let result: any[] = [];
-                for (const side in SignSide) {
-                    if (data[key](side) === undefined) continue;
-                    result.push({
-                        side: side,
-                        content: data[key](side)
-                    });
-                }
-                return result;
-            }
-            default:
-                break;
-        }
-    }
-
-    private logBlockPistonComponentprivates(data: any, key: string): any {
+    private static logBlockPistonComponentKey(data: any, key: string): any {
         switch (key) {
             case 'getAttachedBlocks':
-                return this.logEventData(data[key]());
+                return Debug.logEventData(data[key]());
             case 'getAttachedBlocksLocations':
-                return this.logEventData(data[key]());
+                return Debug.logEventData(data[key]());
             default:
-                break;
+                return undefined;
         }
     }
 
-    private logBlockRecordPlayerComponentprivates(data: any, key: string): any {
+    private static logBlockRecordPlayerComponentKey(
+        data: any,
+        key: string
+    ): any {
         switch (key) {
             case 'isPlaying':
                 return data[key]();
             case 'getRecord':
                 if (data[key]() === undefined) return;
-                return this.logEventData(data[key]());
+                return Debug.logEventData(data[key]());
             default:
-                break;
+                return undefined;
         }
     }
 
-    private logItemDurabilityComponentprivates(data: any, key: string): any {
+    private static logItemDurabilityComponentKey(data: any, key: string): any {
         switch (key) {
             case 'getDamageChance':
                 let result: any[] = [];
@@ -485,22 +412,25 @@ export class Debug {
                 }
                 return result;
             default:
-                break;
+                return undefined;
         }
     }
 
-    private logItemEnchantableComponentprivates(data: any, key: string): any {
+    private static logItemEnchantableComponentKey(data: any, key: string): any {
         switch (key) {
             case 'getEnchantments':
                 return data[key]().map((enchantment: any) =>
-                    this.logEventData(enchantment, enchantment.constructor.name)
+                    Debug.logEventData(
+                        enchantment,
+                        enchantment.constructor.name
+                    )
                 );
             default:
-                break;
+                return undefined;
         }
     }
 
-    private getParentPrototypeName(obj: any, key: string): string {
+    private static getParentPrototypeName(obj: any, key: string): string {
         const prototype = Object.getPrototypeOf(obj);
 
         if (!prototype) return ''; // No parent prototype (reached the top of the chain)
