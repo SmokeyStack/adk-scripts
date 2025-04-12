@@ -44,7 +44,7 @@ export class DirectionHelper {
             case Direction.West:
                 return new Vector3Builder(-1, 0, 0);
             case Direction.East:
-                return new Vector3Builder(-1, 0, 0);
+                return new Vector3Builder(1, 0, 0);
         }
     }
 
