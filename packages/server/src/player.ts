@@ -20,7 +20,7 @@ export class PlayerHelper {
             player.getComponent('inventory') as EntityInventoryComponent
         ).container;
 
-        if (item.amount < -amount)
+        if (item.amount <= amount)
             inventory.setItem(player.selectedSlotIndex, undefined);
         else
             inventory.setItem(
