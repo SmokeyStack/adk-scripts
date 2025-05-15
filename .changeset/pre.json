@@ -1,8 +1,8 @@
 {
   "mode": "exit",
-  "tag": "beta",
+  "tag": "rc",
   "initialVersions": {
-    "adk-scripts-server": "2.0.0-beta.5"
+    "adk-scripts-server": "2.0.0-rc.1"
   },
   "changesets": []
 }
