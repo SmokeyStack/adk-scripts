@@ -1,4 +1,5 @@
 import {
+    Container,
     Enchantment,
     EnchantmentSlot,
     EnchantmentType,
@@ -6,12 +7,13 @@ import {
     ItemDurabilityComponent,
     ItemEnchantableComponent,
     ItemFoodComponent,
+    ItemInventoryComponent,
     ItemStack,
     Player
 } from '@minecraft/server';
 import * as minecraftcommon from '@minecraft/common';
 
-export class ComponentItemCooldown {
+class ComponentItemCooldown {
     static get(item: ItemStack): ItemCooldownComponent {
         return item.getComponent('cooldown') as ItemCooldownComponent;
     }
@@ -39,7 +41,7 @@ export class ComponentItemCooldown {
     }
 }
 
-export class ComponentItemDurability {
+class ComponentItemDurability {
     static get(item: ItemStack): ItemDurabilityComponent {
         return item.getComponent('durability') as ItemDurabilityComponent;
     }
@@ -66,7 +68,7 @@ export class ComponentItemDurability {
     }
 }
 
-export class ComponentItemEnchantable {
+class ComponentItemEnchantable {
     static get(item: ItemStack): ItemEnchantableComponent {
         return item.getComponent('enchantable') as ItemEnchantableComponent;
     }
@@ -126,7 +128,7 @@ export class ComponentItemEnchantable {
     }
 }
 
-export class ComponentItemFood {
+class ComponentItemFood {
     static get(item: ItemStack): ItemFoodComponent {
         return item.getComponent('food') as ItemFoodComponent;
     }
@@ -147,3 +149,21 @@ export class ComponentItemFood {
         return ComponentItemFood.get(item).usingConvertsTo;
     }
 }
+
+class ComponentItemInventory {
+    static get(item: ItemStack): ItemInventoryComponent {
+        return item.getComponent('inventory') as ItemInventoryComponent;
+    }
+
+    static getContainer(item: ItemStack): Container {
+        return ComponentItemInventory.get(item).container;
+    }
+}
+
+export {
+    ComponentItemCooldown,
+    ComponentItemDurability,
+    ComponentItemEnchantable,
+    ComponentItemFood,
+    ComponentItemInventory
+};
