@@ -11,7 +11,7 @@ import {
 
 export class PlayerHelper {
     static decrementStack(player: Player, amount: number = 1): void {
-        if (player.getGameMode() == GameMode.creative) return;
+        if (player.getGameMode() == GameMode.Creative) return;
 
         const item: ItemStack = (
             player.getComponent('inventory') as EntityInventoryComponent
@@ -30,7 +30,7 @@ export class PlayerHelper {
     }
 
     static decrementDurability(player: Player, amount: number = 1): void {
-        if (player.getGameMode() == GameMode.creative) return;
+        if (player.getGameMode() == GameMode.Creative) return;
 
         const item: ItemStack = (
             player.getComponent('inventory') as EntityInventoryComponent

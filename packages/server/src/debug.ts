@@ -1,9 +1,7 @@
 import {
     Block,
     BlockComponentTypes,
-    BlockDestructionParticlesComponent,
     BlockFluidContainerComponent,
-    BlockInventoryComponent,
     BlockPermutation,
     BlockPistonComponent,
     BlockRecordPlayerComponent,

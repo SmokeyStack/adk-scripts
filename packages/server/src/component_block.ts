@@ -21,7 +21,7 @@ import { Vector3Builder } from './vector';
 export class ComponentBlockFluidContainer {
     static get(block: Block): BlockFluidContainerComponent | undefined {
         return block.getComponent(
-            'fluidContainer'
+            'fluid_container'
         ) as BlockFluidContainerComponent;
     }
 
