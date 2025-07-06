@@ -1,0 +1,8 @@
+{
+  "mode": "exit",
+  "tag": "rc",
+  "initialVersions": {
+    "adk-scripts-server": "2.1.0-rc.1"
+  },
+  "changesets": []
+}
