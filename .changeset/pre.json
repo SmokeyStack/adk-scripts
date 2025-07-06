@@ -2,7 +2,7 @@
   "mode": "exit",
   "tag": "beta",
   "initialVersions": {
-    "adk-scripts-server": "2.0.0-beta.5"
+    "adk-scripts-server": "2.2.0-beta.1"
   },
   "changesets": []
 }
